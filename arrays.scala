@@ -1,5 +1,7 @@
 import scala.math.min
-
+import scala.util.control._
+import scala.io.Source
+import scala.util.control.Breaks._
 object arrays  {
 
   /*
@@ -14,7 +16,11 @@ object arrays  {
   }
 
   def getIntsAsString(label: String, delimiter : String, a: Array[Int]) : String = {
-    ""
+    var numbers = ""
+    for(i <- 0 until a.length){
+        numbers = numbers + a(i) + delimiter
+    }
+    label + numbers.dropRight(1)
   }
 
 
@@ -23,7 +29,21 @@ object arrays  {
   // Each line should be converted to Int (if possible) or 0 otherwise.
 
   def readFileIntoArray(filename: String, a : Array[Int]) {
-
+    var count = 0
+    val loop = new Breaks
+    loop.breakable{
+    for(line <- Source.fromFile(filename).getLines){
+    if(count == a.length){
+        loop.break
+    }
+    else if(count != a.length){
+        a(count) = line.toInt
+        count = count + 1
+    }
+    }
+    }
+    
+    a
   }
 
   //Minimum chunk
@@ -33,14 +53,26 @@ object arrays  {
 
   def minimum(a: Array[Int]) : Int = {
     require(a.length > 0) // if you delete this, the tests will not pass!
+    var lowestNum = 0
+    for(i <- 0 until a.length){
+        if(a(i) < lowestNum){
+            lowestNum = a(i)
+        }
+    }
 
-    return 0; // so stub compiles
+    lowestNum // so stub compiles
   }
   //CountEven chunk
   ///  Return the number of even values in a.
   ///  Example: If a contains {-4, 7, 6, 12, 9}, return 3. 
   def countEven(a: Array[Int]) : Int = {
-    return 0; // so stub compiles
+    var evenCount = 0
+    for(i <- 0 until a.length){
+        if(a(i) % 2 == 0){
+            evenCount += 1
+        }
+    }
+    evenCount; // so stub compiles
   }
 
   //CountEven chunk
@@ -48,7 +80,14 @@ object arrays  {
   ///  Example: If a contains {-4, 7, 6, 12, 9}, return 3. 
 
   def countOdd(a: Array[Int]) : Int = {
-    return 0; // so stub compiles
+    var oddCount = 0
+    for(i <- 0 until a.length){
+        if(a(i) % 2 != 0){
+            oddCount += 1
+        }
+    }
+      
+    oddCount // so stub compiles
   }
 
   //PairwiseAdd chunk
@@ -58,7 +97,13 @@ object arrays  {
   ///  then at the end sum should contain {9, 3, 14}. 
 
   def pairwiseAdd(a: Array[Int], b: Array[Int], c: Array[Int])  {
-
+    val addSize = min(a.length, b.length)
+    val newArray = Array.fill(addSize)(0)
+    for(i <- 0 until addSize - 1){
+    c(i) = a(i) + b(i)
+    }
+      
+    c  
   }
   //NewPairwiseAdd chunk
   ///  Return a new array whose elements are the sums of the
@@ -71,7 +116,9 @@ object arrays  {
     val newArray = Array.fill(addSize)(0)
 
     // your code here
-
+    for(i <- 0 until addSize){
+        newArray(i) = a(i) + b(i)
+    }
     newArray
   }
   //IsAscending chunk
@@ -83,8 +130,19 @@ object arrays  {
   ///  Examples: If a contains {2, 5, 5, 8}, return true;
   ///  if a contains {2, 5, 3, 8}, return false. 
   def isAscending(a: Array[Int]) : Boolean = {
-    false
-  }
+    var condition = true
+    val loop = new Breaks
+    loop.breakable{
+    for(i <- 1 until a.length){
+        if(a(i-1) > a(i)){
+            condition = false
+            loop.break
+        }
+        else(condition = true)
+    }
+    }
+    condition
+    }
 
   /*
      getAscendingRun(a, position) returns the position where a 
@@ -109,8 +167,17 @@ object arrays  {
 
   def getAscendingRun(a: Array[Int], position : Int) : Int = {
     require(position < a.length)
-
-    -1  // replace with your code, which should return Int
+    var count = position + 1
+    val loop = new Breaks
+    loop.breakable{
+    for(i <- position until a.length - 1){
+        if(a(i) > a(i + 1)){
+            count = i + 1
+            loop.break
+        }
+    }
+   }
+    count
   }
 
 
