@@ -164,23 +164,8 @@ object arrays  {
       run is 8
 
   */
-/*
-  def getAscendingRun(a: Array[Int], position : Int) : Int = {
-    require(position < a.length)
-    var count = position + 1
-    val loop = new Breaks
-    loop.breakable{
-    for(i <- position until a.length - 1){
-        if(a(i) > a(i + 1)){
-            count = i + 1
-            loop.break
-        }
-    }
-   }
-    count
-  }
-    */
-     def getAscendingRun(a: Array[Int], position: Int): Int = {
+
+  def getAscendingRun(a: Array[Int], position: Int): Int = {
 	require(position < a.length)//makes sure the position is less than the length of the array so there are no out of bounds exceptions
     var count=0;
     var numToCompare=a(position)
@@ -208,8 +193,33 @@ object arrays  {
     2, 5, 8 | 3, 9, 9 | 8
   */
 
-  def getRunsAsString(a: Array[Int]) : String = {
-    ""
-  }
-  // end PrintRuns chunk   
-}
+ def getRunsAsString(a: Array[Int]): String = {
+    var count=""
+    var iterator=0
+    var currIndex=0
+    var x=0
+    var increment=0
+    var position=0
+    while(iterator!=a.length){
+        currIndex=getAscendingRun(a,position)
+        for(b<-position to currIndex-1){
+        increment+=1
+        count+=a(b)
+     if(b!=currIndex-1){
+     count+=", "
+         }
+     }
+     count+=" | "
+     position=currIndex
+     iterator=getAscendingRun(a,position)
+    }
+    for(c<-increment to a.length-1){
+     if(x==1){
+          count+=", "
+    }
+       count+=a(c)
+       x+=1
+    }
+        count
+        }
+    }
