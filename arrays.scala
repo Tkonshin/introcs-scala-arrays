@@ -164,7 +164,7 @@ object arrays  {
       run is 8
 
   */
-
+/*
   def getAscendingRun(a: Array[Int], position : Int) : Int = {
     require(position < a.length)
     var count = position + 1
@@ -179,7 +179,26 @@ object arrays  {
    }
     count
   }
-
+    */
+     def getAscendingRun(a: Array[Int], position: Int): Int = {
+	require(position < a.length)//makes sure the position is less than the length of the array so there are no out of bounds exceptions
+    var count=0;
+    var numToCompare=a(position)
+    var alreadyFound="not found"
+    for(b<-position to a.length-1){
+        if((a(b)<numToCompare)&&(alreadyFound!="found")){
+        if(b!=a.length){
+            count=b
+            alreadyFound="found"
+         }   
+    }
+    numToCompare=a(b)
+    }
+    if(count==0){
+        count=a.length
+    }
+        count
+    }
 
   /*
     This should use teh getAscendingRun() function to produce a string

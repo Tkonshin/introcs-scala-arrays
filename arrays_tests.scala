@@ -15,12 +15,12 @@ class RationalScalaTestFlatSpecMatchers extends FlatSpec with Matchers {
 
   it should "handle non-empty array" in {
     val result = getIntsAsString("label2: ", ":", Array[Int](1, 2, 3))
-    result should be ("label1: 1:2:3")
+    result should be ("label2: 1:2:3")
   }
 
   it should "handle different labels" in {
     val result = getIntsAsString("label2: ", ":", Array[Int](1, 2, 3))
-    result should be ("label1: 1:2:3")    
+    result should be ("label2: 1:2:3")    
   }
 
   "minimum()" should "not work for 0-length array" in {
@@ -112,9 +112,9 @@ class RationalScalaTestFlatSpecMatchers extends FlatSpec with Matchers {
     getAscendingRun(a, 0) should be (3)
     getAscendingRun(a, 3) should be (6)
     getAscendingRun(a, 6) should be (7)
-    getAscendingRun(a, 7) should be (9)
-    getAscendingRun(a, 9) should be (11)
-    getAscendingRun(a, 11) should be (13)
+    getAscendingRun(a, 7) should be (15)
+    getAscendingRun(a, 9) should be (15)
+    getAscendingRun(a, 11) should be (15)
   }
 
   "getRunsAsString()" should "work with the provided example" in {
